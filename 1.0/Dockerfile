@@ -62,10 +62,9 @@ RUN mv composer.phar /usr/local/bin/composer && \
 RUN command -v composer
 
 # Node.js
-RUN curl -sL https://deb.nodesource.com/setup_13.x -o nodesource_setup.sh
-RUN bash nodesource_setup.sh
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 RUN apt-get install nodejs -y
-RUN npm install npm@6.13.0 -g
+RUN npm install npm@6.14.13 -g
 RUN command -v node
 RUN command -v npm
 
