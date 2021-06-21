@@ -27,7 +27,10 @@ RUN apt-get install -y \
     nasm \
     libjpeg-dev \
     libpng-dev \
-    libpng16-16
+    libpng16-16 \
+    apt-transport-https \
+    ca-certificates \
+    gnupg
 
 RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
 
@@ -66,6 +69,12 @@ RUN apt-get install nodejs -y
 RUN npm install npm@6.14.13 -g
 RUN command -v node
 RUN command -v npm
+
+# Google cloud
+RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && \
+    apt-get update -y && \
+    apt-get install google-cloud-sdk -y
 
 # Other
 RUN mkdir ~/.ssh
